@@ -1,4 +1,5 @@
 import { SCENES_NAME } from "../Common/Constant";
+import PlatformSystem from "../Platform/PlatformSystem";
 import ArchiveSystem from "../System/ArchiveSystem";
 import GlobalSystem from "../System/GlobalSystem";
 import SceneManagerSystem from "../System/SceneManagerSystem";
@@ -14,10 +15,12 @@ export default class LoadingSceneController extends cc.Component {
         ArchiveSystem.initialize();
         // 预加载一些Scene
         SceneManagerSystem.initialize();
-        // 打开主页
-        SceneManagerSystem.open(SCENES_NAME.GameScene);
+        // 初始化平台
+        PlatformSystem.Initialize();
     }
 
     public start() {
+        // 打开主页
+        SceneManagerSystem.open(SCENES_NAME.GameScene);
     }
 }

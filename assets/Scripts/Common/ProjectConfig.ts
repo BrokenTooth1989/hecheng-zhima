@@ -1,5 +1,5 @@
 /** 项目配置 */
 export const PROJECT_CONFIG = {
-    appID: 'xxxxxxxxxxxxx',
+    appID: 'wxfd0eabc560fe539c',
     gameName: 'tile-master'
 }

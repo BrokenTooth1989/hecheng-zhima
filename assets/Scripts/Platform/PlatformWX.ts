@@ -14,7 +14,7 @@ class PlatformWX implements IPlatform {
     private _videoSuccessHandler: Function = null;
 
     public initialize(): void {
-        cc.log("初始化微信框架");
+        console.log("初始化微信框架");
         wx.showShareMenu({
             withShareTicket: true,
             menus: ['shareAppMessage', 'shareTimeline'],
@@ -75,6 +75,7 @@ class PlatformWX implements IPlatform {
     }
 
     public showRewardVideo(handler: Function = null): void {
+        if (!this._videoSuccessHandler) return;
         this._videoSuccessHandler = handler;
         this._rewardVideo
             .show()
@@ -98,6 +99,7 @@ class PlatformWX implements IPlatform {
     }
 
     public showBannerAd(): void {
+        if (!this._bannerAd) return;
         const { screenWidth, screenHeight } = wx.getSystemInfoSync();
         this._bannerAd.show()
             .then(() => {
@@ -109,6 +111,7 @@ class PlatformWX implements IPlatform {
     }
 
     public hideBannerAd(recreate: boolean = false): void {
+        if (!this._bannerAd) return;
         this._bannerAd.hide();
         if (recreate) {
             this.refreshBannerAd();
@@ -121,6 +124,7 @@ class PlatformWX implements IPlatform {
     }
 
     public showInterstitialAd(): void {
+        if (!this._interstitialAd) return;
         this._interstitialAd.show();
     }
 
@@ -177,13 +181,14 @@ class PlatformWX implements IPlatform {
     }
 
     private __createBannerAd(): void {
+        console.log('创建banner广告');
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
             adIntervals: 30,
             style: {
                 left: 0,
                 top: 0,
-                width: 300,
+                width: 210,
                 height: 0
             }
         });
@@ -203,6 +208,7 @@ class PlatformWX implements IPlatform {
         this._bannerAd.onResize(() => {
 
         });
+        console.log(this._bannerAd);
     }
 
     private __createInterstitialAd(): void {

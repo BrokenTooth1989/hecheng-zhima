@@ -1,14 +1,14 @@
 export const WX_CONFIG = {
     AD_ID: {
         /** banner广告 */
-        banner: '',
+        banner: 'adunit-c37fb7ef94834014',
         /** 视频广告 */
-        video: '',
+        video: 'adunit-599b96e6303265df',
         /** 插屏广告 */
-        interstitial: '',
+        interstitial: 'adunit-b8e833846b0e135e',
         /** 格子广告 */
-        grid: '',
+        grid: 'adunit-ffb90784c33508bc',
         /** 原生模板广告 */
-        custom: '',
+        custom: 'adunit-63a5e78e1b1c5f77',
     }
 }

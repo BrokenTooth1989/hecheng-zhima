@@ -170,6 +170,7 @@
     },
     "_enabled": true,
     "fruitTag": 107,
+    "fruitIndex": 6,
     "_id": ""
   },
   {
@@ -178,7 +179,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "126b4e2a-5e83-42c3-91c1-b37b4140fbf7"
     },
     "fileId": "",
     "sync": false
