@@ -35,6 +35,10 @@ export default class GameSceneController extends cc.Component {
     @property([cc.Prefab])
     public prefabFruits: cc.Prefab[] = [];
 
+    @property([cc.Prefab])
+    public prefabFruitBooms: cc.Prefab[] = [];
+
+
     private _currentFruit: FruitController = null;
     private _existFruits: FruitController[] = [];
     private _fruitSelections: number[] = [];
@@ -110,7 +114,6 @@ export default class GameSceneController extends cc.Component {
         this.fruitArea.addChild(fruit);
         let currentFruit = fruit.getComponent(FruitController);
         currentFruit.initForNew();
-        currentFruit.stay();
         if (this.fruitPosition.y - fruit.height / 2 > this.nodeDangerous.y) {
             fruit.setPosition(this.fruitPosition.position);
         } else {
@@ -195,5 +198,10 @@ export default class GameSceneController extends cc.Component {
         node.position = f.node.position;
         this.fruitArea.addChild(node);
         fc.initForUpgrade();
+        let bf = this.prefabFruitBooms[index];
+        if (!bf) return;
+        let nodeBoom = NodePool.getItem(bf.name, bf);
+        this.fruitArea.addChild(nodeBoom);
+        nodeBoom.position = node.position;
     }
 }

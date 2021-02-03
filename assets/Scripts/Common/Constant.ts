@@ -9,6 +9,8 @@ export const PREFABS_NAME = {
 
 }
 
+export const MERGE_SPEED: number = 4000;
+
 export enum FRUIT_TAG {
     f1 = 101,
     f2 = 102,

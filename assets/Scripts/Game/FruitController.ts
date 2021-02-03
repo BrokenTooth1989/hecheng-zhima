@@ -1,4 +1,4 @@
-import { FRUIT_TAG } from "../Common/Constant";
+import { FRUIT_TAG, MERGE_SPEED } from "../Common/Constant";
 import NodePool from "../Libraries/NodePool";
 import GameSceneController from "../Scenes/GameSceneController";
 
@@ -17,7 +17,6 @@ export default class FruitController extends cc.Component {
 
     private _rigidBody: cc.RigidBody = null;
     private _collider: cc.PhysicsCollider = null;
-    private _originGravityScale: number = 1;
     private _originScale: number = 1;
     private _merging: boolean = false;
 
@@ -32,16 +31,13 @@ export default class FruitController extends cc.Component {
         this._matchStatus = v;
         switch (v) {
             case 0:
-                cc.log('设置为  0');
                 break;
 
             case 1:
-                cc.log('设置为  1');
                 this.turnToUnreal();
                 break;
 
             case 2:
-                cc.log('设置为  2');
                 break;
         }
     }
@@ -53,11 +49,10 @@ export default class FruitController extends cc.Component {
         this._originScale = this.node.scale;
         this._rigidBody = this.node.getComponent(cc.RigidBody);
         this._rigidBody.bullet = true;
-        this._originGravityScale = this._rigidBody.gravityScale;
         this._collider = this.node.getComponent(cc.PhysicsCollider);
         this._collider.friction = 0.2;
-        this._collider.restitution = 0.2;
-        this._collider.density = 0.5;
+        // this._collider.restitution = 0.2;
+        this._collider.density = 0.3;
     }
 
     public onDisable() {
@@ -68,7 +63,7 @@ export default class FruitController extends cc.Component {
         this.matchStatus = 0;
         this.node.scale = this._originScale;
         this._collider.enabled = true;
-        this._rigidBody.gravityScale = this._originGravityScale;
+        this._rigidBody.active = false;
         this._merging = false;
         this.growing = false;
         this.mergeAllow = false;
@@ -78,31 +73,26 @@ export default class FruitController extends cc.Component {
         this.matchStatus = 0;
         this.node.scale = 0;
         this._collider.enabled = true;
-        this._rigidBody.gravityScale = this._originGravityScale;
+        this._rigidBody.active = true;
         this._merging = false;
         this.growing = true;
         this.mergeAllow = true;
         cc.tween(this.node)
-            .to(0.1, { scale: this._originScale })
+            .to(0.4, { scale: this._originScale }, { easing: cc.easing.backOut })
             .call(() => {
                 this.growing = false;
             })
             .start();
     }
 
-    public stay(): void {
-        this._rigidBody.type = cc.RigidBodyType.Static;
-    }
-
     public fall(): void {
-        this._rigidBody.type = cc.RigidBodyType.Dynamic;
+        this._rigidBody.active = true;
         this.mergeAllow = true;
         this.scheduleOnce(this.checkFail, 2);
     }
 
     public turnToUnreal(): void {
         this._collider.enabled = false;
-        this._rigidBody.gravityScale = 0;
         this._rigidBody.linearVelocity = cc.v2(0, 0);
     }
 
@@ -110,7 +100,7 @@ export default class FruitController extends cc.Component {
         if (this._merging) return;
         this._merging = true;
         cc.tween(from)
-            .to(0.1, { position: this.node.position })
+            .to(this.node.width / MERGE_SPEED, { position: this.node.position })
             .call(() => {
                 NodePool.putItem(from.name, from);
                 this.generateNextLevel();
@@ -141,6 +131,7 @@ export default class FruitController extends cc.Component {
             let oc = o.node.getComponent(FruitController);
             if (sc.growing || oc.growing) return;
             if (!sc.mergeAllow || !oc.mergeAllow) return;
+            if (sc.matchStatus !== 0 || oc.matchStatus !== 0) return;
             sc.matchStatus = 2;
             oc.matchStatus = 1;
             if (s.node.y > o.node.y) {
