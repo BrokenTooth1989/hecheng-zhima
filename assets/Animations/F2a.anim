@@ -3,8 +3,8 @@
   "_name": "F2a",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.275,
-  "sample": 40,
+  "_duration": 0.3235294117647059,
+  "sample": 34,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,61 +18,61 @@
             }
           },
           {
-            "frame": 0.025,
+            "frame": 0.029411764705882353,
             "value": {
               "__uuid__": "8fb68d0a-3f6d-4290-93b5-1ec213ea2d01"
             }
           },
           {
-            "frame": 0.05,
+            "frame": 0.058823529411764705,
             "value": {
               "__uuid__": "e38e542c-c8db-43c7-84a5-764c950e85f1"
             }
           },
           {
-            "frame": 0.075,
+            "frame": 0.08823529411764706,
             "value": {
               "__uuid__": "69a9953b-a0ac-4bfa-b388-e6e389a4a3c9"
             }
           },
           {
-            "frame": 0.1,
+            "frame": 0.11764705882352941,
             "value": {
               "__uuid__": "ebd2d6af-e34a-4a98-966f-81e501e5e7e4"
             }
           },
           {
-            "frame": 0.125,
+            "frame": 0.14705882352941177,
             "value": {
               "__uuid__": "87208379-ecbe-40a3-bdd6-f4f8856f69b9"
             }
           },
           {
-            "frame": 0.15,
+            "frame": 0.17647058823529413,
             "value": {
               "__uuid__": "bda742b9-dc07-401b-89e7-dcbc08c5eed2"
             }
           },
           {
-            "frame": 0.175,
+            "frame": 0.20588235294117646,
             "value": {
               "__uuid__": "9499dd98-7abc-4ab8-8566-cb8208e77720"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.23529411764705882,
             "value": {
               "__uuid__": "1320bfb3-ef76-4e4f-82d2-e9b10de279e5"
             }
           },
           {
-            "frame": 0.225,
+            "frame": 0.2647058823529412,
             "value": {
               "__uuid__": "163dd09c-e155-4891-9ee7-d0a8904aadfc"
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.29411764705882354,
             "value": null
           }
         ]

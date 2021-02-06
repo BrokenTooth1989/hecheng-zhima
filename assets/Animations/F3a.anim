@@ -3,8 +3,8 @@
   "_name": "F3a",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.275,
-  "sample": 40,
+  "_duration": 0.3235294117647059,
+  "sample": 34,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,61 +18,61 @@
             }
           },
           {
-            "frame": 0.025,
+            "frame": 0.029411764705882353,
             "value": {
               "__uuid__": "54fba029-4f1a-4074-9905-c2cbaaf3385f"
             }
           },
           {
-            "frame": 0.05,
+            "frame": 0.058823529411764705,
             "value": {
               "__uuid__": "f45cce74-b6b3-4314-a7b0-f5dd2fe384b5"
             }
           },
           {
-            "frame": 0.075,
+            "frame": 0.08823529411764706,
             "value": {
               "__uuid__": "d819cda6-1cda-4a4b-804d-78df1b90bdb1"
             }
           },
           {
-            "frame": 0.1,
+            "frame": 0.11764705882352941,
             "value": {
               "__uuid__": "57f2b3a7-debc-42c1-8b9f-2f2bf9160962"
             }
           },
           {
-            "frame": 0.125,
+            "frame": 0.14705882352941177,
             "value": {
               "__uuid__": "360ad98f-5521-4204-a1a7-384c72a14334"
             }
           },
           {
-            "frame": 0.15,
+            "frame": 0.17647058823529413,
             "value": {
               "__uuid__": "6d728faa-2626-4864-b53b-daee471f6707"
             }
           },
           {
-            "frame": 0.175,
+            "frame": 0.20588235294117646,
             "value": {
               "__uuid__": "67e50ba3-6490-4834-b729-c9d090a3c074"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.23529411764705882,
             "value": {
               "__uuid__": "1fcacd58-21c5-440f-b6a8-46775ac4557a"
             }
           },
           {
-            "frame": 0.225,
+            "frame": 0.2647058823529412,
             "value": {
               "__uuid__": "b8d65cf4-e89f-4304-9292-8c91dec79593"
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.29411764705882354,
             "value": null
           }
         ]

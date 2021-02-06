@@ -147,7 +147,6 @@ export default class FruitController extends cc.Component {
                 // y轴相差小于1，使用速度判断
                 let vs = Math.abs(this._rigidBody.linearVelocity.x);
                 let os = Math.abs(o.node.getComponent(cc.RigidBody).linearVelocity.x);
-                cc.log(vs, os);
                 if (vs > os) {
                     sc.matchStatus = 1;
                     oc.matchStatus = 2;

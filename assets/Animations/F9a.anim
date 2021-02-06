@@ -3,8 +3,8 @@
   "_name": "F9a",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.275,
-  "sample": 40,
+  "_duration": 0.3235294117647059,
+  "sample": 34,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,61 +18,61 @@
             }
           },
           {
-            "frame": 0.025,
+            "frame": 0.029411764705882353,
             "value": {
               "__uuid__": "f82877b8-cb97-47cd-9732-30223bac0871"
             }
           },
           {
-            "frame": 0.05,
+            "frame": 0.058823529411764705,
             "value": {
               "__uuid__": "3193c800-e0dc-4cc3-8ceb-5d8daf040c72"
             }
           },
           {
-            "frame": 0.075,
+            "frame": 0.08823529411764706,
             "value": {
               "__uuid__": "e1d8dbda-ba71-4ea3-ba84-a66694fb3e2f"
             }
           },
           {
-            "frame": 0.1,
+            "frame": 0.11764705882352941,
             "value": {
               "__uuid__": "ddb3cf11-3f75-4f80-ac5f-7c040a168895"
             }
           },
           {
-            "frame": 0.125,
+            "frame": 0.14705882352941177,
             "value": {
               "__uuid__": "296e548e-06d9-4567-a8e1-7fd42c0839b0"
             }
           },
           {
-            "frame": 0.15,
+            "frame": 0.17647058823529413,
             "value": {
               "__uuid__": "c14b246c-eb2b-44e2-a771-2a79d9c0efdb"
             }
           },
           {
-            "frame": 0.175,
+            "frame": 0.20588235294117646,
             "value": {
               "__uuid__": "47ff33ce-82d0-4dd4-aa4a-2b887524456c"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.23529411764705882,
             "value": {
               "__uuid__": "d183f038-0a4e-4d02-b8d8-57422234aa10"
             }
           },
           {
-            "frame": 0.225,
+            "frame": 0.2647058823529412,
             "value": {
               "__uuid__": "771fb346-a5af-4532-b23f-430b9ea01d31"
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.29411764705882354,
             "value": null
           }
         ]

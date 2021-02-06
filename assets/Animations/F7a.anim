@@ -3,8 +3,8 @@
   "_name": "F7a",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.275,
-  "sample": 40,
+  "_duration": 0.3235294117647059,
+  "sample": 34,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,61 +18,61 @@
             }
           },
           {
-            "frame": 0.025,
+            "frame": 0.029411764705882353,
             "value": {
               "__uuid__": "bb007e97-43b2-40d3-9004-efa4f7ed7cd7"
             }
           },
           {
-            "frame": 0.05,
+            "frame": 0.058823529411764705,
             "value": {
               "__uuid__": "5cc49338-3c58-4fd2-8406-f5ea4b0f44df"
             }
           },
           {
-            "frame": 0.075,
+            "frame": 0.08823529411764706,
             "value": {
               "__uuid__": "1673ebbc-b92f-4906-9939-2032df7949a6"
             }
           },
           {
-            "frame": 0.1,
+            "frame": 0.11764705882352941,
             "value": {
               "__uuid__": "d7f05558-a61a-4f9a-af7c-ca1c62f820fc"
             }
           },
           {
-            "frame": 0.125,
+            "frame": 0.14705882352941177,
             "value": {
               "__uuid__": "1c9c51df-86e8-45e9-87c8-78b4410baf44"
             }
           },
           {
-            "frame": 0.15,
+            "frame": 0.17647058823529413,
             "value": {
               "__uuid__": "4568290b-81f0-4762-89f1-1157d5ca5c68"
             }
           },
           {
-            "frame": 0.175,
+            "frame": 0.20588235294117646,
             "value": {
               "__uuid__": "dec0e89f-74eb-4a18-910c-b4f722bbdbda"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.23529411764705882,
             "value": {
               "__uuid__": "b92321ed-d599-4727-a876-d0f9d821b065"
             }
           },
           {
-            "frame": 0.225,
+            "frame": 0.2647058823529412,
             "value": {
               "__uuid__": "186e99cf-329c-433b-a0d0-b3cbe8e7d633"
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.29411764705882354,
             "value": null
           }
         ]
