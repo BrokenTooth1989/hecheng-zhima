@@ -184,7 +184,7 @@ class PlatformWX implements IPlatform {
         console.log('创建banner广告');
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
-            adIntervals: 30,
+            adIntervals: 70,
             style: {
                 left: 0,
                 top: 0,
