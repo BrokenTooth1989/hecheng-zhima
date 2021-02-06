@@ -1,6 +1,7 @@
 import { FRUIT_TAG, MERGE_SPEED } from "../Common/Constant";
 import NodePool from "../Libraries/NodePool";
 import GameSceneController from "../Scenes/GameSceneController";
+import AudioController from "./AudioController";
 
 const { ccclass, property } = cc._decorator;
 
@@ -67,9 +68,11 @@ export default class FruitController extends cc.Component {
         this._merging = false;
         this.growing = false;
         this.mergeAllow = false;
+        this.node.group = 'default';
     }
 
     public initForUpgrade(): void {
+        AudioController.I.playMerge();
         this.matchStatus = 0;
         this.node.scale = 0;
         this._collider.enabled = true;
@@ -77,12 +80,13 @@ export default class FruitController extends cc.Component {
         this._merging = false;
         this.growing = true;
         this.mergeAllow = true;
+        this.node.group = 'default';
         cc.tween(this.node)
-            .to(0.4, { scale: this._originScale }, { easing: cc.easing.backOut })
+            .to(0.34, { scale: this._originScale }, { easing: cc.easing.backOut })
             .start();
         this.scheduleOnce(() => {
             this.growing = false;
-        }, 0.2);
+        }, 0.16);
     }
 
     public fall(): void {
@@ -91,18 +95,27 @@ export default class FruitController extends cc.Component {
         this.scheduleOnce(this.checkFail, 2);
     }
 
+    public blast(): void {
+        GameSceneController.I.blastOne(this);
+        NodePool.putItem(this.node.name, this.node);
+        GameSceneController.I.removeFruit(this);
+    }
+
     public turnToUnreal(): void {
-        this._collider.enabled = false;
+        this.node.active = false;
+        this.node.group = 'other';
+        this.node.active = true;
         this._rigidBody.linearVelocity = cc.v2(0, 0);
     }
 
-    public mergeFrom(from: cc.Node): void {
+    public mergeFrom(from: FruitController): void {
         if (this._merging) return;
         this._merging = true;
-        cc.tween(from)
+        cc.tween(from.node)
             .to(this.node.width / MERGE_SPEED, { position: this.node.position })
             .call(() => {
-                NodePool.putItem(from.name, from);
+                NodePool.putItem(from.node.name, from.node);
+                GameSceneController.I.removeFruit(from);
                 this.generateNextLevel();
             })
             .start();
@@ -115,6 +128,7 @@ export default class FruitController extends cc.Component {
                 // TODO 在原位置生成一个高等级的水果
                 GameSceneController.I.showMergeFruit(this);
                 NodePool.putItem(this.node.name, this.node);
+                GameSceneController.I.removeFruit(this);
             })
             .start();
     }
@@ -132,31 +146,29 @@ export default class FruitController extends cc.Component {
             if (sc.growing || oc.growing) return;
             if (!sc.mergeAllow || !oc.mergeAllow) return;
             if (sc.matchStatus !== 0 || oc.matchStatus !== 0) return;
+            let moveOne: FruitController, stayOne: FruitController;
             if (Math.abs(s.node.y - o.node.y) >= 1) {
                 // y轴相差大于1，使用坐标判断
+                moveOne = oc;
+                stayOne = sc;
                 if (s.node.y > o.node.y) {
-                    sc.matchStatus = 1;
-                    oc.matchStatus = 2;
-                    oc.mergeFrom(s.node);
-                } else if (s.node.y < o.node.y) {
-                    sc.matchStatus = 2;
-                    oc.matchStatus = 1;
-                    sc.mergeFrom(o.node);
+                    moveOne = sc;
+                    stayOne = oc;
                 }
             } else {
                 // y轴相差小于1，使用速度判断
                 let vs = Math.abs(this._rigidBody.linearVelocity.x);
                 let os = Math.abs(o.node.getComponent(cc.RigidBody).linearVelocity.x);
+                moveOne = oc;
+                stayOne = sc;
                 if (vs > os) {
-                    sc.matchStatus = 1;
-                    oc.matchStatus = 2;
-                    oc.mergeFrom(s.node);
-                } else {
-                    sc.matchStatus = 2;
-                    oc.matchStatus = 1;
-                    sc.mergeFrom(o.node);
+                    moveOne = sc;
+                    stayOne = oc;
                 }
             }
+            moveOne.matchStatus = 1;
+            stayOne.matchStatus = 2;
+            stayOne.mergeFrom(moveOne);
         }
     }
 

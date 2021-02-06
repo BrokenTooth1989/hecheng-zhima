@@ -1,4 +1,5 @@
 import { SCENES_NAME } from "../Common/Constant";
+import AudioController from "../Game/AudioController";
 import FruitController from "../Game/FruitController";
 import NodePool from "../Libraries/NodePool";
 import PlatformSystem from "../Platform/PlatformSystem";
@@ -62,32 +63,17 @@ export default class GameSceneController extends cc.Component {
         this._maxLevel = v;
         switch (v) {
             case 0:
+                this._fruitSelections = [0];
+                break;
             case 1:
+                this._fruitSelections = [1, 2];
+                break;
             case 2:
             case 3:
-            case 4:
-                this._fruitSelections = [0, 1, 2, 3];
+                this._fruitSelections = [1, 2, 3];
                 break;
-
-            case 5:
-                this._fruitSelections = [0, 1, 2, 3, 4];
-                break;
-
-            case 6:
-                this._fruitSelections = [1, 2, 3, 4, 5];
-                break;
-
-            case 7:
-                this._fruitSelections = [1, 2, 3, 4, 5, 6];
-                break;
-            case 8:
-            case 9:
-                this._fruitSelections = [1, 2, 3, 4, 5, 6, 7];
-                break;
-
-            case 10:
             default:
-                this._fruitSelections = [2, 3, 4, 5, 6, 7, 8];
+                this._fruitSelections = [1, 2, 3, 4];
                 break;
         }
     }
@@ -98,7 +84,7 @@ export default class GameSceneController extends cc.Component {
 
     public onLoad() {
         GameSceneController.I = this;
-        this.nodeEndPage.active = false;
+        this.hideEndPage();
         this.score = 0;
         this.maxLevel = 0;
         this.fruitArea.on(cc.Node.EventType.TOUCH_END, this.releaseFruit, this);
@@ -156,15 +142,9 @@ export default class GameSceneController extends cc.Component {
                 .start();
             this.scheduleOnce(() => {
                 // TODO 显示结算页面
-                this.labelScoreEnd.string = this.score.toString();
-                this.nodeEndPage.active = true;
-                PlatformSystem.platform.showInterstitialAd();
+                this.showEndPage();
             }, 2);
         }
-    }
-
-    public reStart(): void {
-        SceneManagerSystem.open(SCENES_NAME.GameScene);
     }
 
     public clean(): void {
@@ -195,6 +175,7 @@ export default class GameSceneController extends cc.Component {
         let prefab = this.prefabFruits[index];
         let node = NodePool.getItem(prefab.name, prefab);
         let fc = node.getComponent(FruitController);
+        this._existFruits.push(fc);
         node.position = f.node.position;
         this.fruitArea.addChild(node);
         fc.initForUpgrade();
@@ -203,5 +184,44 @@ export default class GameSceneController extends cc.Component {
         let nodeBoom = NodePool.getItem(bf.name, bf);
         this.fruitArea.addChild(nodeBoom);
         nodeBoom.position = node.position;
+    }
+
+    public blastOne(f: FruitController): void {
+        let node = f.node;
+        let bf = this.prefabFruitBooms[f.fruitIndex];
+        if (!bf) return;
+        let nodeBoom = NodePool.getItem(bf.name, bf);
+        this.fruitArea.addChild(nodeBoom);
+        nodeBoom.position = node.position;
+        AudioController.I.playMerge();
+    }
+
+    public removeFruit(f: FruitController): void {
+        this._existFruits.splice(this._existFruits.indexOf(f), 1);
+    }
+
+    public revive(): void {
+        this.nodeDangerous.active = false;
+        this._existFruits.sort((a: FruitController, b: FruitController) => {
+            return a.fruitIndex - b.fruitIndex;
+        });
+        let i = 0;
+        while (i < 4) {
+            this.scheduleOnce(() => {
+                let f = this._existFruits.shift();
+                if (!f) return;
+                f.blast();
+            }, 0.2 * (i + 1));
+            i += 1;
+        }
+        this.gameover = false;
+    }
+
+    public showEndPage(): void {
+        this.nodeEndPage.active = true;
+    }
+
+    public hideEndPage(): void {
+        this.nodeEndPage.active = false;
     }
 }
