@@ -79,10 +79,10 @@ export default class FruitController extends cc.Component {
         this.mergeAllow = true;
         cc.tween(this.node)
             .to(0.4, { scale: this._originScale }, { easing: cc.easing.backOut })
-            .call(() => {
-                this.growing = false;
-            })
             .start();
+        this.scheduleOnce(() => {
+            this.growing = false;
+        }, 0.2);
     }
 
     public fall(): void {
@@ -132,14 +132,31 @@ export default class FruitController extends cc.Component {
             if (sc.growing || oc.growing) return;
             if (!sc.mergeAllow || !oc.mergeAllow) return;
             if (sc.matchStatus !== 0 || oc.matchStatus !== 0) return;
-            sc.matchStatus = 2;
-            oc.matchStatus = 1;
-            if (s.node.y > o.node.y) {
-                sc.matchStatus = 1;
-                oc.matchStatus = 2;
-                oc.mergeFrom(s.node);
+            if (Math.abs(s.node.y - o.node.y) >= 1) {
+                // y轴相差大于1，使用坐标判断
+                if (s.node.y > o.node.y) {
+                    sc.matchStatus = 1;
+                    oc.matchStatus = 2;
+                    oc.mergeFrom(s.node);
+                } else if (s.node.y < o.node.y) {
+                    sc.matchStatus = 2;
+                    oc.matchStatus = 1;
+                    sc.mergeFrom(o.node);
+                }
             } else {
-                sc.mergeFrom(o.node);
+                // y轴相差小于1，使用速度判断
+                let vs = Math.abs(this._rigidBody.linearVelocity.x);
+                let os = Math.abs(o.node.getComponent(cc.RigidBody).linearVelocity.x);
+                cc.log(vs, os);
+                if (vs > os) {
+                    sc.matchStatus = 1;
+                    oc.matchStatus = 2;
+                    oc.mergeFrom(s.node);
+                } else {
+                    sc.matchStatus = 2;
+                    oc.matchStatus = 1;
+                    sc.mergeFrom(o.node);
+                }
             }
         }
     }
