@@ -1,12 +1,9 @@
-import { SCENES_NAME } from "../Common/Constant";
 import AudioController from "../Game/AudioController";
 import FruitController from "../Game/FruitController";
 import NodePool from "../Libraries/NodePool";
 import PlatformSystem from "../Platform/PlatformSystem";
-import SceneManagerSystem from "../System/SceneManagerSystem";
 
 const { ccclass, property } = cc._decorator;
-const moveSpeed: number = 2000;
 
 @ccclass
 export default class GameSceneController extends cc.Component {
@@ -41,6 +38,7 @@ export default class GameSceneController extends cc.Component {
 
 
     private _currentFruit: FruitController = null;
+    private _dangerousTween: cc.Tween = null;
     private _existFruits: FruitController[] = [];
     private _fruitSelections: number[] = [];
 
@@ -88,6 +86,8 @@ export default class GameSceneController extends cc.Component {
         this.score = 0;
         this.maxLevel = 0;
         this.fruitArea.on(cc.Node.EventType.TOUCH_END, this.releaseFruit, this);
+        this.fruitArea.on(cc.Node.EventType.TOUCH_START, this.moveFruit, this);
+        this.fruitArea.on(cc.Node.EventType.TOUCH_MOVE, this.moveFruit, this);
     }
 
     public start() {
@@ -114,6 +114,14 @@ export default class GameSceneController extends cc.Component {
             .start();
     }
 
+    public moveFruit(e: cc.Event.EventTouch): void {
+        if (this.gameover) return;
+        if (!this._currentFruit) return;
+        let x = this.fruitArea.convertToNodeSpaceAR(e.getLocation()).x;
+        let max = (this.fruitArea.width - this._currentFruit.node.width) / 2;
+        this._currentFruit.node.x = Math.abs(x) > Math.abs(max) ? max * x / Math.abs(x) : x;
+    }
+
     public releaseFruit(e: cc.Event.EventTouch): void {
         if (this.nodeFinger.active) this.nodeFinger.active = false;
         if (this.gameover) return;
@@ -121,14 +129,8 @@ export default class GameSceneController extends cc.Component {
         let currentFruit = this._currentFruit;
         this._currentFruit = null;
         this._existFruits.push(currentFruit);
-        let x = this.fruitArea.convertToNodeSpaceAR(e.getLocation()).x;
-        cc.tween(currentFruit.node)
-            .to(Math.abs(x - currentFruit.node.x) / moveSpeed, { x: x }, { easing: t => 1 - Math.pow(1 - t, 3) })
-            .call(() => {
-                currentFruit.fall();
-                this.scheduleOnce(this.addFruit, 1);
-            })
-            .start();
+        currentFruit.fall();
+        this.scheduleOnce(this.addFruit, 1);
     }
 
     public checkDangerous(f: cc.Node): void {
@@ -137,7 +139,7 @@ export default class GameSceneController extends cc.Component {
             let t = cc.tween()
                 .to(0.2, { opacity: 50 })
                 .to(0.2, { opacity: 255 });
-            cc.tween(this.nodeDangerous).then(t)
+            this._dangerousTween = cc.tween(this.nodeDangerous).then(t)
                 .repeatForever()
                 .start();
             this.scheduleOnce(() => {
@@ -201,7 +203,10 @@ export default class GameSceneController extends cc.Component {
     }
 
     public revive(): void {
-        this.nodeDangerous.active = false;
+        if (this._dangerousTween) {
+            this._dangerousTween.stop();
+            this.nodeDangerous.opacity = 255;
+        }
         this._existFruits.sort((a: FruitController, b: FruitController) => {
             return a.fruitIndex - b.fruitIndex;
         });
