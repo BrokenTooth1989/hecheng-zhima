@@ -75,12 +75,12 @@ class PlatformWX implements IPlatform {
     }
 
     public showRewardVideo(handler: Function = null): void {
-        if (!this._videoSuccessHandler) return;
+        if (!this._rewardVideo) return;
         this._videoSuccessHandler = handler;
         this._rewardVideo
             .show()
             .then(() => {
-                cc.log("视频播放成功")
+                console.log("视频播放成功")
             })
             .catch(err => {
                 this._rewardVideo.load()
@@ -88,7 +88,7 @@ class PlatformWX implements IPlatform {
                         this._rewardVideo
                             .show()
                             .then(() => {
-                                cc.log("视频重新加载，播放成功")
+                                console.log("视频重新加载，播放成功")
                             });
                     })
                     .catch(err2 => {

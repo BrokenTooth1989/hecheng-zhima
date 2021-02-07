@@ -105,13 +105,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 67
-      },
-      {
         "__id__": 68
       },
       {
         "__id__": 69
+      },
+      {
+        "__id__": 70
       }
     ],
     "_prefab": null,
@@ -201,7 +201,7 @@
       "array": [
         0,
         0,
-        718.8822750226889,
+        718.7925312439361,
         0,
         0,
         0,
@@ -2173,10 +2173,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 65
+        "__id__": 66
       },
       {
-        "__id__": 66
+        "__id__": 67
       }
     ],
     "_prefab": null,
@@ -2746,6 +2746,9 @@
       },
       {
         "__id__": 63
+      },
+      {
+        "__id__": 65
       }
     ],
     "_prefab": null,
@@ -2798,7 +2801,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Score",
+    "_name": "Text",
     "_objFlags": 0,
     "_parent": {
       "__id__": 59
@@ -2821,7 +2824,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 224,
       "height": 88.2
     },
     "_anchorPoint": {
@@ -2873,9 +2876,9 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "复活",
-    "_N$string": "复活",
-    "_fontSize": 60,
+    "_string": "立即复活",
+    "_N$string": "立即复活",
+    "_fontSize": 56,
     "_lineHeight": 70,
     "_enableWrapText": true,
     "_N$file": {
@@ -3006,6 +3009,25 @@
     "_componentId": "ec49eIWVxlBEoDaLIJSAY5v",
     "handler": "revive",
     "customEventData": ""
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 59
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "6ff607b4-46c6-465c-8f59-8ecaa515fdfb"
+    },
+    "_clips": [
+      {
+        "__uuid__": "6ff607b4-46c6-465c-8f59-8ecaa515fdfb"
+      }
+    ],
+    "playOnLoad": true,
+    "_id": "a5YZyzQ4JOJqN5DIqYTE1H"
   },
   {
     "__type__": "cc.Widget",
