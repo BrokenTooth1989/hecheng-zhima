@@ -72,7 +72,7 @@ export default class GameSceneController extends cc.Component {
                 this._fruitSelections = [0, 1, 2, 3];
                 break;
             default:
-                this._fruitSelections = [1, 2, 3, 4];
+                this._fruitSelections = this._revived ? [1, 2, 3, 4] : [0, 1, 2, 3, 4];
                 break;
         }
     }
@@ -223,6 +223,7 @@ export default class GameSceneController extends cc.Component {
         }
         this.gameover = false;
         this._fruitSelections.splice(this._fruitSelections.indexOf(0), 1);
+        this._revived = true;
     }
 
     public showEndPage(): void {
