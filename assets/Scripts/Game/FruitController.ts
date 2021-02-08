@@ -86,7 +86,7 @@ export default class FruitController extends cc.Component {
             .start();
         this.scheduleOnce(() => {
             this.growing = false;
-        }, 0.16);
+        }, 0.04);
     }
 
     public fall(): void {
