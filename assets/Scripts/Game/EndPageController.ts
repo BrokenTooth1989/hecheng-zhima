@@ -26,7 +26,6 @@ export default class EndPageController extends cc.Component {
     public playAgain(): void {
         AudioController.I.playButton();
         SceneManagerSystem.open(SCENES_NAME.GameScene);
-        PlatformSystem.platform.showInterstitialAd();
     }
 
     public revive(): void {

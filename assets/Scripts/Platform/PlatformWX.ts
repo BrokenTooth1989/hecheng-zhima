@@ -43,6 +43,7 @@ class PlatformWX implements IPlatform {
         this.__createBannerAd();
         this.__createVideoAd();
         this.__createInterstitialAd();
+        this.__createCustomAd();
     }
 
 
@@ -184,7 +185,6 @@ class PlatformWX implements IPlatform {
         console.log('创建banner广告');
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
-            adIntervals: 70,
             style: {
                 left: 0,
                 top: 0,
@@ -213,6 +213,14 @@ class PlatformWX implements IPlatform {
 
     private __createInterstitialAd(): void {
         this._interstitialAd = wx.createInterstitialAd({ adUnitId: WX_CONFIG.AD_ID.interstitial });
+    }
+
+    private __createCustomAd(): void {
+        this._customAd = wx.createCustomAd({
+            adUnitId: WX_CONFIG.AD_ID.custom,
+            adIntervals: 60,
+            style: { left: 10, top: 160 }
+        });
     }
 }
 

@@ -539,7 +539,7 @@ declare namespace wx {
      */
     function createBannerAd(res: {
         adUnitId: string,
-        adIntervals: number,
+        adIntervals?: number,
         style: {
             left: number,
             top: number,

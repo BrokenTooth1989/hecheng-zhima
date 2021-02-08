@@ -37,6 +37,7 @@ export default class GameSceneController extends cc.Component {
     public prefabFruitBooms: cc.Prefab[] = [];
 
 
+    private _revived: boolean = false;
     private _currentFruit: FruitController = null;
     private _dangerousTween: cc.Tween = null;
     private _existFruits: FruitController[] = [];
@@ -64,11 +65,11 @@ export default class GameSceneController extends cc.Component {
                 this._fruitSelections = [0];
                 break;
             case 1:
-                this._fruitSelections = [1, 2];
+                this._fruitSelections = [0, 1, 2];
                 break;
             case 2:
             case 3:
-                this._fruitSelections = [1, 2, 3];
+                this._fruitSelections = [0, 1, 2, 3];
                 break;
             default:
                 this._fruitSelections = [1, 2, 3, 4];
@@ -91,6 +92,7 @@ export default class GameSceneController extends cc.Component {
     }
 
     public start() {
+        PlatformSystem.platform.showCustomAd();
         PlatformSystem.platform.showBannerAd();
         this.addFruit();
     }
@@ -220,10 +222,12 @@ export default class GameSceneController extends cc.Component {
             i += 1;
         }
         this.gameover = false;
+        this._fruitSelections.splice(this._fruitSelections.indexOf(0), 1);
     }
 
     public showEndPage(): void {
         this.nodeEndPage.active = true;
+        PlatformSystem.platform.showInterstitialAd();
     }
 
     public hideEndPage(): void {
