@@ -234,4 +234,10 @@ export default class GameSceneController extends cc.Component {
     public hideEndPage(): void {
         this.nodeEndPage.active = false;
     }
+
+    public NavigateToOther(): void {
+        wx.navigateToMiniProgram({
+            appId: 'wxb5d253966df7a263'
+        });
+    }
 }
