@@ -59,6 +59,10 @@ class PlatformDefault implements IPlatform {
         cc.log('退出游戏');
     }
 
+    public shareApp(): void {
+        cc.log('分享游戏');
+    }
+
     private __createVideoAd(): void {
         cc.log('创建视频广告');
     }

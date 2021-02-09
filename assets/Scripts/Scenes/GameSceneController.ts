@@ -1,7 +1,10 @@
+import { ACHIEVE_CONFIG } from "../Common/Constant";
+import AchievementController from "../Game/AchievementController";
 import AudioController from "../Game/AudioController";
 import FruitController from "../Game/FruitController";
 import NodePool from "../Libraries/NodePool";
 import PlatformSystem from "../Platform/PlatformSystem";
+import ArchiveSystem from "../System/ArchiveSystem";
 
 const { ccclass, property } = cc._decorator;
 
@@ -65,14 +68,14 @@ export default class GameSceneController extends cc.Component {
                 this._fruitSelections = [0];
                 break;
             case 1:
-                this._fruitSelections = [0, 1, 2];
+                this._fruitSelections = [1, 2];
                 break;
             case 2:
             case 3:
-                this._fruitSelections = [0, 1, 2, 3];
+                this._fruitSelections = [1, 2, 3];
                 break;
             default:
-                this._fruitSelections = this._revived ? [1, 2, 3, 4] : [0, 1, 2, 3, 4];
+                this._fruitSelections = [1, 2, 3, 4];
                 break;
         }
     }
@@ -190,6 +193,16 @@ export default class GameSceneController extends cc.Component {
         let nodeBoom = NodePool.getItem(bf.name, bf);
         this.fruitArea.addChild(nodeBoom);
         nodeBoom.position = node.position;
+        let ani = nodeBoom.getComponent(cc.Animation);
+        ani.off('finished');
+        ani.on('finished', () => {
+            let achi = ArchiveSystem.localData.achievement;
+            achi[index] += 1;
+            ArchiveSystem.localData.achievement = achi;
+            if (ACHIEVE_CONFIG[index].includes(achi[index])) {
+                AchievementController.I.show(index, achi[index]);
+            }
+        })
     }
 
     public blastOne(f: FruitController): void {

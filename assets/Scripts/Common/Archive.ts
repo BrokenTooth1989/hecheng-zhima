@@ -1,9 +1,7 @@
-import { SKIN_GROUP_DEFAULT } from "./Constant";
 import { PROJECT_CONFIG } from "./ProjectConfig";
 
 const LOCAL_DATA_DEFAULT: ILocalData = {
-    skinGroup: SKIN_GROUP_DEFAULT,
-    currentLevel: 0,
+    achievement: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
 
 class Archive {

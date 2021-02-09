@@ -21,8 +21,7 @@ interface IMapInfo {
  * 本地存储的数据结构
  */
 interface ILocalData {
-    skinGroup: string;
-    currentLevel: number; ''
+    achievement: number[];
 }
 
 /**
@@ -60,4 +59,5 @@ interface IPlatform {
     showCustomAd: Function;
     hideCustomAd: Function;
     exitGame: Function;
+    shareApp: Function;
 }

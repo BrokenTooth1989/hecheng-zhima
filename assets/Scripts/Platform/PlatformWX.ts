@@ -153,6 +153,10 @@ class PlatformWX implements IPlatform {
         wx.exitMiniProgram({});
     }
 
+    public shareApp(): void {
+        wx.shareAppMessage({});
+    }
+
 
     private __createVideoAd(): void {
         this._rewardVideo = wx.createRewardedVideoAd({ adUnitId: WX_CONFIG.AD_ID.video });
