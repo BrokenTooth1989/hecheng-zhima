@@ -84,6 +84,7 @@ export default class GameSceneController extends cc.Component {
     public onLoad() {
         GameSceneController.I = this;
         this.hideEndPage();
+        this.nodeDangerous.active = false;
         this.score = 0;
         this.maxLevel = 0;
         this.fruitArea.on(cc.Node.EventType.TOUCH_END, this.releaseFruit, this);
@@ -138,6 +139,7 @@ export default class GameSceneController extends cc.Component {
     public checkDangerous(f: cc.Node): void {
         if (f.y + f.height / 2 > this.nodeDangerous.y) {
             this.gameover = true;
+            this.nodeDangerous.active = true;
             let t = cc.tween()
                 .to(0.2, { opacity: 50 })
                 .to(0.2, { opacity: 255 });
@@ -208,6 +210,7 @@ export default class GameSceneController extends cc.Component {
         if (this._dangerousTween) {
             this._dangerousTween.stop();
             this.nodeDangerous.opacity = 255;
+            this.nodeDangerous.active = false;
         }
         this._existFruits.sort((a: FruitController, b: FruitController) => {
             return a.fruitIndex - b.fruitIndex;

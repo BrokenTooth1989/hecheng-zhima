@@ -183,12 +183,13 @@ class PlatformWX implements IPlatform {
 
     private __createBannerAd(): void {
         console.log('创建banner广告');
+        let info = wx.getSystemInfoSync();
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
             style: {
                 left: 0,
                 top: 0,
-                width: 210,
+                width: info.screenWidth,
                 height: 0
             }
         });
@@ -216,10 +217,13 @@ class PlatformWX implements IPlatform {
     }
 
     private __createCustomAd(): void {
+        let info = wx.getSystemInfoSync();
+        let screenRatio = info.screenHeight / info.screenWidth;
+        let dRatio = 1280 / 720;
         this._customAd = wx.createCustomAd({
             adUnitId: WX_CONFIG.AD_ID.custom,
             adIntervals: 60,
-            style: { left: 10, top: 160 }
+            style: { left: 10, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
         });
     }
 }
