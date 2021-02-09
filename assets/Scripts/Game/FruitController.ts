@@ -141,6 +141,7 @@ export default class FruitController extends cc.Component {
     // 只在两个碰撞体开始接触时被调用一次
     public onBeginContact(c: cc.PhysicsContact, s: cc.PhysicsCollider, o: cc.PhysicsCollider): void {
         if (s.tag === o.tag) {
+            if (s.tag === FRUIT_TAG.f11) return;
             let sc = this;
             let oc = o.node.getComponent(FruitController);
             if (sc.growing || oc.growing) return;
