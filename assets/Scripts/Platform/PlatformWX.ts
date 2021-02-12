@@ -9,6 +9,7 @@ class PlatformWX implements IPlatform {
     private _bannerAd: wx.BannerAd;
     private _interstitialAd: any;
     private _customAd: any;
+    private _customAd_2: any;
 
     private _shareSuccessHandler: Function = null;
     private _videoSuccessHandler: Function = null;
@@ -137,6 +138,14 @@ class PlatformWX implements IPlatform {
                     cc.log('原生广告显示出错', e);
                 });
         }
+
+        if (!!this._customAd_2) {
+            this._customAd_2
+                .show()
+                .catch((e: any) => {
+                    cc.log('原生广告显示出错2', e);
+                });
+        }
     }
 
     public hideCustomAd(): void {
@@ -222,12 +231,16 @@ class PlatformWX implements IPlatform {
 
     private __createCustomAd(): void {
         let info = wx.getSystemInfoSync();
-        let screenRatio = info.screenHeight / info.screenWidth;
-        let dRatio = 1280 / 720;
         this._customAd = wx.createCustomAd({
             adUnitId: WX_CONFIG.AD_ID.custom,
             adIntervals: 60,
             style: { left: 10, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
+        });
+
+        this._customAd_2 = wx.createCustomAd({
+            adUnitId: WX_CONFIG.AD_ID.custom_2,
+            adIntervals: 60,
+            style: { left: info.screenWidth - 110, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
         });
     }
 }
