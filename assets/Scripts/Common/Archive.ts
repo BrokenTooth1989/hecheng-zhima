@@ -1,7 +1,10 @@
 import { PROJECT_CONFIG } from "./ProjectConfig";
 
 const LOCAL_DATA_DEFAULT: ILocalData = {
-    achievement: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    achievement: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    lastData: [],
+    lastMaxLevel: 0,
+    lastScroe: 0,
 };
 
 class Archive {

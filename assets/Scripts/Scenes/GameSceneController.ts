@@ -88,11 +88,10 @@ export default class GameSceneController extends cc.Component {
         GameSceneController.I = this;
         this.hideEndPage();
         this.nodeDangerous.active = false;
-        this.score = 0;
-        this.maxLevel = 0;
         this.fruitArea.on(cc.Node.EventType.TOUCH_END, this.releaseFruit, this);
         this.fruitArea.on(cc.Node.EventType.TOUCH_START, this.moveFruit, this);
         this.fruitArea.on(cc.Node.EventType.TOUCH_MOVE, this.moveFruit, this);
+        this.initFromData();
     }
 
     public start() {
@@ -228,6 +227,9 @@ export default class GameSceneController extends cc.Component {
         this._existFruits.sort((a: FruitController, b: FruitController) => {
             return a.fruitIndex - b.fruitIndex;
         });
+        this._existFruits.forEach((v: FruitController) => {
+            v.mergeAllow = false;
+        });
         let i = 0;
         while (i < 4) {
             this.scheduleOnce(() => {
@@ -237,6 +239,11 @@ export default class GameSceneController extends cc.Component {
             }, 0.2 * (i + 1));
             i += 1;
         }
+        this.scheduleOnce(() => {
+            this._existFruits.forEach((v: FruitController) => {
+                v.mergeAllow = true;
+            });
+        }, 0.2 * i);
         this.gameover = false;
         this._fruitSelections.splice(this._fruitSelections.indexOf(0), 1);
         this._revived = true;
@@ -255,5 +262,53 @@ export default class GameSceneController extends cc.Component {
         wx.navigateToMiniProgram({
             appId: 'wxb5d253966df7a263'
         });
+    }
+
+    public initFromData(): void {
+        const localData = ArchiveSystem.localData;
+        if (localData.lastMaxLevel > 0) {
+            this.maxLevel = localData.lastMaxLevel;
+            this.score = localData.lastScroe;
+            localData.lastData.forEach((v: IFruitPosition) => {
+                let prefab = this.prefabFruits[v.typeIndex];
+                let node = NodePool.getItem(prefab.name, prefab);
+                let fc = node.getComponent(FruitController);
+                this._existFruits.push(fc);
+                node.setPosition(v.position.x, v.position.y);
+                this.fruitArea.addChild(node);
+                fc.initForData();
+            });
+        } else {
+            this.score = 0;
+            this.maxLevel = 0;
+        }
+        if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
+            this.schedule(this.saveData, 1, cc.macro.REPEAT_FOREVER);
+        }
+    }
+
+    public saveData(): void {
+        if (this.gameover) {
+            this.clearData();
+        } else {
+            cc.log(this._existFruits);
+            const localData = ArchiveSystem.localData;
+            localData.lastMaxLevel = this.maxLevel;
+            localData.lastScroe = this.score;
+            localData.lastData = this._existFruits.map((v: FruitController): IFruitPosition => {
+                let n = v.node;
+                return {
+                    typeIndex: v.fruitIndex,
+                    position: { x: n.x, y: n.y }
+                }
+            });
+        }
+    }
+
+    public clearData(): void {
+        const localData = ArchiveSystem.localData;
+        localData.lastData = [];
+        localData.lastMaxLevel = 0;
+        localData.lastScroe = 0;
     }
 }

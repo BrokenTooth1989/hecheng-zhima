@@ -17,11 +17,19 @@ interface IMapInfo {
     map: IMapLayerInfo[];
 }
 
+interface IFruitPosition {
+    typeIndex: number;
+    position: { x: number, y: number }
+}
+
 /**
  * 本地存储的数据结构
  */
 interface ILocalData {
     achievement: number[];
+    lastData: IFruitPosition[];
+    lastMaxLevel: number;
+    lastScroe: number;
 }
 
 /**

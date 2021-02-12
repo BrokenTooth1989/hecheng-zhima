@@ -71,6 +71,17 @@ export default class FruitController extends cc.Component {
         this.node.group = 'default';
     }
 
+    public initForData(): void {
+        this.matchStatus = 0;
+        this.node.scale = this._originScale;
+        this._collider.enabled = true;
+        this._rigidBody.active = true;
+        this._merging = false;
+        this.growing = false;
+        this.mergeAllow = true;
+        this.node.group = 'default';
+    }
+
     public initForUpgrade(): void {
         AudioController.I.playMerge();
         this.matchStatus = 0;
@@ -98,7 +109,6 @@ export default class FruitController extends cc.Component {
     public blast(): void {
         GameSceneController.I.blastOne(this);
         NodePool.putItem(this.node.name, this.node);
-        GameSceneController.I.removeFruit(this);
     }
 
     public turnToUnreal(): void {

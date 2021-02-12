@@ -1,3 +1,4 @@
+import GameSceneController from "../Scenes/GameSceneController";
 import { WX_CONFIG } from "./wxConfig";
 
 const delayTime: number = 3600;
@@ -39,6 +40,11 @@ class PlatformWX implements IPlatform {
             }
             this._shareSuccessHandler = null;
             this._onHideTime = Infinity;
+        });
+        wx.onHide(() => {
+            if (GameSceneController.I) {
+                GameSceneController.I.saveData();
+            }
         });
 
         this.__createBannerAd();
@@ -240,7 +246,7 @@ class PlatformWX implements IPlatform {
         this._customAd_2 = wx.createCustomAd({
             adUnitId: WX_CONFIG.AD_ID.custom_2,
             adIntervals: 60,
-            style: { left: info.screenWidth - 110, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
+            style: { left: info.screenWidth - 80, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
         });
     }
 }

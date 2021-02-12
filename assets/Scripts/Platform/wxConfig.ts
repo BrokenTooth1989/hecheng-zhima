@@ -14,4 +14,3 @@ export const WX_CONFIG = {
         custom_2: 'adunit-08236ae6ab96c636',
     }
 }
-}
