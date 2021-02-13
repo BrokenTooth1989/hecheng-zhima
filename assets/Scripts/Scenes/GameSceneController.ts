@@ -291,7 +291,6 @@ export default class GameSceneController extends cc.Component {
         if (this.gameover) {
             this.clearData();
         } else {
-            cc.log(this._existFruits);
             const localData = ArchiveSystem.localData;
             localData.lastMaxLevel = this.maxLevel;
             localData.lastScroe = this.score;

@@ -52,7 +52,9 @@ export default class AchievementController extends cc.Component {
         this.nodeContinue.active = false;
         this.scheduleOnce(() => {
             this.nodeContinue.active = true;
-        }, 0.6);
+            if (Math.random() < 0.3) return;
+            PlatformSystem.platform.showInterstitialAd();
+        }, 1);
 
         this.spriteFruit.spriteFrame = this.frameFruits[fruitIndex];
         this.labelDesc.string = `累计合成 ${achieveNumber} 个${this.fruitNames[fruitIndex]}`;
@@ -67,8 +69,6 @@ export default class AchievementController extends cc.Component {
             .to(0.3, { scale: 0 }, { easing: cc.easing.backIn })
             .call(() => {
                 this.node.active = false;
-                if (Math.random() < 0.3) return;
-                PlatformSystem.platform.showInterstitialAd();
             })
             .start();
     }

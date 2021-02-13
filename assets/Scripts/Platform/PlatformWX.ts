@@ -205,6 +205,7 @@ class PlatformWX implements IPlatform {
         let info = wx.getSystemInfoSync();
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
+            adIntervals: 300,
             style: {
                 left: 0,
                 top: 0,
