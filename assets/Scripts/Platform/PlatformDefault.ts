@@ -47,6 +47,10 @@ class PlatformDefault implements IPlatform {
         cc.log('显示插屏广告');
     }
 
+    public loadInterstitialAd(): void {
+        cc.log('手动加载插屏广告');
+    }
+
     public showCustomAd(): void {
         cc.log('显示自定义广告');
     }

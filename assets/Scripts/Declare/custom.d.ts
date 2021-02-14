@@ -64,6 +64,7 @@ interface IPlatform {
     hideBannerAd: { (recreate: boolean = false): void };
     refreshBannerAd: Function;
     showInterstitialAd: Function;
+    loadInterstitialAd: Function;
     showCustomAd: Function;
     hideCustomAd: Function;
     exitGame: Function;

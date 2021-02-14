@@ -82,6 +82,7 @@ export default class GameSceneController extends cc.Component {
 
 
     public gameover: boolean = false;
+    public allowShowInter: boolean = true;
 
 
     public onLoad() {
@@ -194,14 +195,18 @@ export default class GameSceneController extends cc.Component {
         nodeBoom.position = node.position;
         let ani = nodeBoom.getComponent(cc.Animation);
         ani.off('finished');
-        ani.on('finished', () => {
-            let achi = ArchiveSystem.localData.achievement;
-            achi[index] += 1;
-            ArchiveSystem.localData.achievement = achi;
-            if (ACHIEVE_CONFIG[index].includes(achi[index])) {
-                AchievementController.I.show(index, achi[index]);
-            }
-        })
+        if (this.allowShowInter) {
+            ani.on('finished', () => {
+                let achi = ArchiveSystem.localData.achievement;
+                achi[index] += 1;
+                ArchiveSystem.localData.achievement = achi;
+                if (ACHIEVE_CONFIG[index].includes(achi[index])) {
+                    AchievementController.I.show(index, achi[index]);
+                }
+            });
+        } else {
+            PlatformSystem.platform.loadInterstitialAd();
+        }
     }
 
     public blastOne(f: FruitController): void {

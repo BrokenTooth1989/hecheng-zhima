@@ -136,6 +136,10 @@ class PlatformWX implements IPlatform {
         this._interstitialAd.show();
     }
 
+    public loadInterstitialAd(): void {
+        this._interstitialAd.load();
+    }
+
     public showCustomAd(): void {
         if (!!this._customAd) {
             this._customAd
@@ -205,7 +209,7 @@ class PlatformWX implements IPlatform {
         let info = wx.getSystemInfoSync();
         this._bannerAd = wx.createBannerAd({
             adUnitId: WX_CONFIG.AD_ID.banner,
-            adIntervals: 300,
+            adIntervals: 420,
             style: {
                 left: 0,
                 top: 0,
@@ -234,6 +238,18 @@ class PlatformWX implements IPlatform {
 
     private __createInterstitialAd(): void {
         this._interstitialAd = wx.createInterstitialAd({ adUnitId: WX_CONFIG.AD_ID.interstitial });
+        this._interstitialAd.onError(err => {
+            console.log('拉取插屏广告失败', err.errMsg);
+            switch (err.errCode) {
+                case 1004:
+                    GameSceneController.I.allowShowInter = false;
+                    break;
+            }
+        });
+        this._interstitialAd.onLoad(() => {
+            console.log('拉取插屏广告成功');
+            GameSceneController.I.allowShowInter = true;
+        });
     }
 
     private __createCustomAd(): void {
