@@ -4,6 +4,9 @@ import PlatformWX from "./PlatformWX";
 class PlatformSystem {
     private _platformWX = PlatformWX;
     private _platformDefault = PlatformDefault;
+
+    public allowShowInter: boolean = true;
+
     public get platform(): IPlatform {
         switch (cc.sys.platform) {
             // 微信小游戏

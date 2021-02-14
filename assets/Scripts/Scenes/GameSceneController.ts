@@ -82,7 +82,6 @@ export default class GameSceneController extends cc.Component {
 
 
     public gameover: boolean = false;
-    public allowShowInter: boolean = true;
 
 
     public onLoad() {
@@ -195,7 +194,7 @@ export default class GameSceneController extends cc.Component {
         nodeBoom.position = node.position;
         let ani = nodeBoom.getComponent(cc.Animation);
         ani.off('finished');
-        if (this.allowShowInter) {
+        if (PlatformSystem.allowShowInter) {
             ani.on('finished', () => {
                 let achi = ArchiveSystem.localData.achievement;
                 achi[index] += 1;

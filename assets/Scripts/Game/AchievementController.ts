@@ -49,15 +49,10 @@ export default class AchievementController extends cc.Component {
         cc.tween(this.nodeContent)
             .to(0.3, { scale: 1 }, { easing: cc.easing.backOut })
             .start();
-        this.nodeContinue.active = false;
-        this.scheduleOnce(() => {
-            this.nodeContinue.active = true;
-            if (Math.random() < 0.3) return;
-            PlatformSystem.platform.showInterstitialAd();
-        }, 1);
-
+        this.nodeContinue.active = true;
         this.spriteFruit.spriteFrame = this.frameFruits[fruitIndex];
         this.labelDesc.string = `累计合成 ${achieveNumber} 个${this.fruitNames[fruitIndex]}`;
+        PlatformSystem.platform.showInterstitialAd();
     }
 
     public shareApp(): void {

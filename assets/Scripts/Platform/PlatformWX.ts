@@ -1,4 +1,5 @@
 import GameSceneController from "../Scenes/GameSceneController";
+import PlatformSystem from "./PlatformSystem";
 import { WX_CONFIG } from "./wxConfig";
 
 const delayTime: number = 3600;
@@ -242,13 +243,13 @@ class PlatformWX implements IPlatform {
             console.log('拉取插屏广告失败', err.errMsg);
             switch (err.errCode) {
                 case 1004:
-                    GameSceneController.I.allowShowInter = false;
+                    PlatformSystem.allowShowInter = false;
                     break;
             }
         });
         this._interstitialAd.onLoad(() => {
             console.log('拉取插屏广告成功');
-            GameSceneController.I.allowShowInter = true;
+            PlatformSystem.allowShowInter = true;
         });
     }
 
