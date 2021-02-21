@@ -263,6 +263,7 @@ export default class GameSceneController extends cc.Component {
     }
 
     public NavigateToOther(): void {
+        if (cc.sys.platform != cc.sys.WECHAT_GAME) return;
         wx.navigateToMiniProgram({
             appId: 'wxb5d253966df7a263'
         });
