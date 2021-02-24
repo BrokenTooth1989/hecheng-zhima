@@ -1,8 +1,9 @@
 import GameSceneController from "../Scenes/GameSceneController";
 import PlatformSystem from "./PlatformSystem";
-import { WX_CONFIG } from "./wxConfig";
+import { WX_CONFIG, QQ_CONFIG } from "./AdConfig";
 
 const delayTime: number = 3600;
+const onWixinMiniGame: boolean = false;
 
 class PlatformWX implements IPlatform {
     private _onHideTime: number = Infinity;
@@ -11,13 +12,15 @@ class PlatformWX implements IPlatform {
     private _bannerAd: wx.BannerAd;
     private _interstitialAd: any;
     private _customAd: any;
-    // private _customAd_2: any;
+    private _adConfig: any;
 
     private _shareSuccessHandler: Function = null;
     private _videoSuccessHandler: Function = null;
 
     public initialize(): void {
-        console.log("初始化微信框架");
+        console.log("初始化微信/QQ框架");
+        this._adConfig = WX_CONFIG;
+        if (!onWixinMiniGame) this._adConfig = QQ_CONFIG;
         wx.showShareMenu({
             withShareTicket: true,
             menus: ['shareAppMessage', 'shareTimeline'],
@@ -128,6 +131,7 @@ class PlatformWX implements IPlatform {
     }
 
     public refreshBannerAd(): void {
+        if (!this._bannerAd) return;
         this._bannerAd.destroy();
         this.__createBannerAd();
     }
@@ -138,6 +142,7 @@ class PlatformWX implements IPlatform {
     }
 
     public loadInterstitialAd(): void {
+        if (!this._interstitialAd) return;
         this._interstitialAd.load();
     }
 
@@ -179,7 +184,8 @@ class PlatformWX implements IPlatform {
 
 
     private __createVideoAd(): void {
-        this._rewardVideo = wx.createRewardedVideoAd({ adUnitId: WX_CONFIG.AD_ID.video });
+        if (!this._adConfig.AD_ID.video) return;
+        this._rewardVideo = wx.createRewardedVideoAd({ adUnitId: this._adConfig.AD_ID.video });
         // 注册视频的onClose事件
         this._rewardVideo.onClose(res => {
             if (res && res.isEnded || res === undefined) {
@@ -206,10 +212,11 @@ class PlatformWX implements IPlatform {
     }
 
     private __createBannerAd(): void {
+        if (!this._adConfig.AD_ID.banner) return;
         console.log('创建banner广告');
         let info = wx.getSystemInfoSync();
         this._bannerAd = wx.createBannerAd({
-            adUnitId: WX_CONFIG.AD_ID.banner,
+            adUnitId: this._adConfig.AD_ID.banner,
             adIntervals: 420,
             style: {
                 left: 0,
@@ -238,7 +245,8 @@ class PlatformWX implements IPlatform {
     }
 
     private __createInterstitialAd(): void {
-        this._interstitialAd = wx.createInterstitialAd({ adUnitId: WX_CONFIG.AD_ID.interstitial });
+        if (!this._adConfig.AD_ID.interstitial) return;
+        this._interstitialAd = wx.createInterstitialAd({ adUnitId: this._adConfig.AD_ID.interstitial });
         this._interstitialAd.onError(err => {
             console.log('拉取插屏广告失败', err.errMsg);
             switch (err.errCode) {
@@ -254,18 +262,14 @@ class PlatformWX implements IPlatform {
     }
 
     private __createCustomAd(): void {
+        if (!this._adConfig.AD_ID.custom) return;
+        if (!wx.createCustomAd) return;
         let info = wx.getSystemInfoSync();
         this._customAd = wx.createCustomAd({
-            adUnitId: WX_CONFIG.AD_ID.custom,
+            adUnitId: this._adConfig.AD_ID.custom,
             adIntervals: 60,
             style: { left: 10, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
         });
-
-        // this._customAd_2 = wx.createCustomAd({
-        //     adUnitId: WX_CONFIG.AD_ID.custom_2,
-        //     adIntervals: 60,
-        //     style: { left: info.screenWidth - 80, top: 80 + (info.screenHeight - 1280 * (info.screenWidth / 720)) / 2 }
-        // });
     }
 }
 

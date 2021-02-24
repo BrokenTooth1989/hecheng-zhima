@@ -10,7 +10,19 @@ export const WX_CONFIG = {
         grid: 'adunit-ffb90784c33508bc',
         /** 原生模板广告 */
         custom: 'adunit-63a5e78e1b1c5f77',
+    }
+}
+
+
+export const QQ_CONFIG = {
+    AD_ID: {
+        /** banner广告 */
+        banner: null,
+        /** 视频广告 */
+        video: null,
+        /** 插屏广告 */
+        interstitial: null,
         /** 原生模板广告 */
-        custom_2: 'adunit-08236ae6ab96c636',
+        custom: null,
     }
 }
