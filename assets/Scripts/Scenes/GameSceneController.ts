@@ -1,6 +1,7 @@
 import { ACHIEVE_CONFIG } from "../Common/Constant";
 import AchievementController from "../Game/AchievementController";
 import AudioController from "../Game/AudioController";
+import ContinuePage from "../Game/ContinuePage";
 import FruitController from "../Game/FruitController";
 import NodePool from "../Libraries/NodePool";
 import PlatformSystem from "../Platform/PlatformSystem";
@@ -26,6 +27,9 @@ export default class GameSceneController extends cc.Component {
 
     @property(cc.Node)
     public nodeEndPage: cc.Node = null
+
+    @property(cc.Node)
+    public nodeContinuePage: cc.Node = null
 
     @property(cc.Label)
     public labelScore: cc.Label = null
@@ -91,12 +95,24 @@ export default class GameSceneController extends cc.Component {
         this.fruitArea.on(cc.Node.EventType.TOUCH_END, this.releaseFruit, this);
         this.fruitArea.on(cc.Node.EventType.TOUCH_START, this.moveFruit, this);
         this.fruitArea.on(cc.Node.EventType.TOUCH_MOVE, this.moveFruit, this);
-        this.initFromData();
     }
 
     public start() {
+        this.nodeFinger.active = false;
+        this.nodeContinuePage.active = false;
         PlatformSystem.platform.showCustomAd();
         PlatformSystem.platform.showBannerAd();
+        const localData = ArchiveSystem.localData;
+        if (localData.lastScroe > 5000) {
+            ContinuePage.I.show();
+        } else {
+            this.enterGame();
+        }
+    }
+
+    public enterGame(): void {
+        this.nodeFinger.active = true;
+        this.initFromData();
         this.addFruit();
     }
 
@@ -287,7 +303,7 @@ export default class GameSceneController extends cc.Component {
             this.maxLevel = 0;
         }
         if (cc.sys.platform !== cc.sys.WECHAT_GAME) {
-            this.schedule(this.saveData, 1, cc.macro.REPEAT_FOREVER);
+            this.schedule(this.saveData, 5, cc.macro.REPEAT_FOREVER);
         }
     }
 
