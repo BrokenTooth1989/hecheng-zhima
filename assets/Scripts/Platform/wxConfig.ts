@@ -14,3 +14,14 @@ export const WX_CONFIG = {
         custom_2: 'adunit-08236ae6ab96c636',
     }
 }
+
+export const QQ_CONFIG = {
+    AD_ID: {
+        /** banner广告 */
+        banner: null,
+        /** 视频广告 */
+        video: null,
+        /** 插屏广告 */
+        interstitial: null,
+    }
+}
