@@ -1,17 +1,17 @@
 export const WX_CONFIG = {
     AD_ID: {
         /** banner广告 */
-        banner: 'adunit-c37fb7ef94834014',
+        banner: 'adunit-a0fc9fa65a444676',
         /** 视频广告 */
-        video: 'adunit-599b96e6303265df',
+        video: 'adunit-1c33fc3f67356508',
         /** 插屏广告 */
-        interstitial: 'adunit-b8e833846b0e135e',
+        interstitial: 'adunit-901f8025c608f3e6',
         /** 格子广告 */
-        grid: 'adunit-ffb90784c33508bc',
+        grid: 'adunit-004d566406f94f06',
         /** 原生模板广告 */
-        custom: 'adunit-63a5e78e1b1c5f77',
+        custom: 'adunit-b6f287054c384104',
         /** 原生模板广告 */
-        custom_2: 'adunit-08236ae6ab96c636',
+        custom_2: 'adunit-5af7b7cb8edc6b09',
     }
 }
 

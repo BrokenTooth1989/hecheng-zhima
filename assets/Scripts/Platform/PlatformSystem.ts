@@ -3,7 +3,7 @@ import PlatformQQ from "./PlatformQQ";
 import PlatformWX from "./PlatformWX";
 
 class PlatformSystem {
-    private _isQQ: boolean = true;
+    private _isQQ: boolean = false;
     private _platformWX = PlatformWX;
     private _platformQQ = PlatformQQ;
     private _platformDefault = PlatformDefault;
